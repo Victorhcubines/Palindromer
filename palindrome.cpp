@@ -9,6 +9,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <random>
+#include <algorithm>
 
 //=====  Brute-force parameters  =====
 #define MAX_PALINDROMES 2000000
@@ -164,8 +165,8 @@ void RandSearch(std::set<std::string>& palindromes, const std::string& startFor,
   }
 
   //Initialize distributions
-  const std::uniform_int_distribution<int> randIx(0, NUM_LETTERS - 1);
-  const std::uniform_real_distribution<float> rand(0.0f, 1.0f);
+  std::uniform_int_distribution<int> randIx(0, NUM_LETTERS - 1);
+  std::uniform_real_distribution<float> rand(0.0f, 1.0f);
   Trie* tri_for;
   Trie* tri_bac;
 
@@ -321,7 +322,7 @@ int main(int argc, const char* argv[]) {
   for (const std::string& str : palindromes) {
     if (reverse_search) {
       const size_t ix = str.find_first_of('|');
-      fout << "|" << str.substr(ix + 1, str.length() - ix - 1) << startBac << startFor << str.substr(0, ix) << "|" << std::endl;
+      fout << "|" << str.substr(ix + 1, str.length() - ix - 1) << startBac << " " << startFor << str.substr(0, ix) << "|" << std::endl;
     } else {
       fout << startFor << str << startBac << std::endl;
     }
